@@ -11,7 +11,7 @@ class HashTable:
 
     def insert(self, key, item):
         # get bucket
-        bucket = hash(key) % len(self.table)
+        bucket = self.simple_hash(key) % len(self.table)
         bucket_list = self.table[bucket]
 
         # update item if key is already in the bucket
@@ -33,7 +33,7 @@ class HashTable:
 
     def search(self, key):
         # gets appropriate bucket
-        bucket = hash(key) % len(self.table)
+        bucket = self.simple_hash(key) % len(self.table)
         bucket_list = self.table[bucket]
 
         # search for key in bucket
@@ -43,7 +43,7 @@ class HashTable:
 
     def remove(self, key):
         # get appropriate bucket
-        bucket = hash(key) % len(self.table)
+        bucket = self.simple_hash(key) % len(self.table)
         bucket_list = self.table[bucket]
 
         # remove key-value pair
@@ -61,9 +61,12 @@ class HashTable:
         # copy key-value pairs into newly hashed buckets
         for bucket_list in self.table:
             for kv in bucket_list:
-                bucket = hash(kv[0]) % len(new_table)
+                bucket = self.simple_hash(kv[0]) % len(new_table)
                 new_table[bucket].append([kv[0], kv[1]])
 
         # replace current table with new table, delete new table
         self.table = new_table
         del new_table
+
+    def simple_hash(self, key):
+        return key % len(self.table)
