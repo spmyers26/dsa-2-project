@@ -4,7 +4,7 @@ class HashTable:
     def __init__(self, initial_capacity=10):
         # create a list of lists
         self.num_nodes = 0
-        self.OPTIMAL_LOAD_FACTOR = 1
+        self.OPTIMAL_LOAD_FACTOR = 2
         self.table = []
         for i in range(initial_capacity):
             self.table.append([])
@@ -61,7 +61,7 @@ class HashTable:
         # copy key-value pairs into newly hashed buckets
         for bucket_list in self.table:
             for kv in bucket_list:
-                bucket = self.simple_hash(kv[0]) % len(new_table)
+                bucket = kv[0] % len(new_table)
                 new_table[bucket].append([kv[0], kv[1]])
 
         # replace current table with new table, delete new table
